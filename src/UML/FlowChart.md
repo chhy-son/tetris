@@ -7,10 +7,10 @@ title: Main
 ---
     flowchart TD
     Start([Start]) --> StartBtn{Is start?}
-        StartBtn -->|Click| Tetromino[Do Tetris]
-    Tetromino --> Dead{Is end?}
+        StartBtn -->|Click| Tetris[Do Tetris]
+    Tetris --> Dead{Is game over?}
         Dead -->|yes| End([End])
-        Dead -->|no| Tetromino
+        Dead -->|no| Tetris
 ```
 ### Detail Flow Chart
 ```mermaid
@@ -18,16 +18,20 @@ title: Main
 title: Tetris
 ---
     flowchart TD
-    Start([Start]) --> Create[Create random Tetromino]
-    Create --> Wait[Wait for 500ms]
-    Wait --> Drop[Drop the Tetromino one line]
-    Drop --> Dead{Is the Tetrimino 
-                over dead line?}
-    Dead -->|no| Full{Is all blink 
-                    in a line is full?}
-        Full -->|yes| Clear[Clear the line]
-            Clear --> Score[Add user score]
-            Score --> Create
-        Full -->|no| Create
-    Dead -------->|yes| End([End])
+    Start([Start]) --> CreateT[Create random Tetromino]
+    CreateT --> PressKey[/Key/] & InspectTimeLimit{Is over 500ms?}
+        InspectTimeLimit --> DropT[Drop the Tetromino after 500ms]
+    PressKey --> MoveT[Move the Tetromino]
+    
+    MoveT & DropT --> InspectHitT{Is hit the 
+                Tetromino any line?}
+        InspectHitT -->|yes| LockT[Lock the Tetromino position]
+        LockT --> Dead{Is the Tetromino
+        touch the top?}
+            Dead -->|no| Full{Is any lines are fill up?}
+                Full -->|yes| Clear[Clear the line]
+                    Clear --> Score[Add user score]
+                    Score --> CreateT
+                Full -->|no| CreateT
+            Dead ------>|yes| End([End])
 ```

@@ -2,30 +2,35 @@
 ## Sequence Diagram
 ```mermaid
 sequenceDiagram
-    Player -) TetrisBoard: Start tetris
-    activate TetrisBoard
+    Player -) +TetrisBoard: Start tetris
     activate Player
-        TetrisBoard -) TetrisBoard: initialize board
-        TetrisBoard ->> TetrominoCreator: Request random tetrimino
-        activate TetrominoCreator
-        TetrominoCreator -->> TetrisBoard: tetromino
-        deactivate TetrominoCreator
-        loop Every 500ms
-            TetrisBoard ->> TetrominoDropper: Request dropping tetrimino
-            
-            activate TetrominoDropper
-            TetrominoDropper -->> TetrisBoard: Drop the tetrimino 1 line
-            deactivate TetrominoDropper
-            
-            alt Is all blink in a line is full
-                TetrisBoard ->> TetrisBoard: Clear the line in the board
-            end
+    TetrisBoard -) TetrisBoard: initialize board
+    
+    loop Until game over
+        TetrisBoard ->> +TetrominoCreator: Request tetromino
+        TetrominoCreator -->> -TetrisBoard: tetromino
 
-            break When Tetromino touch top line
-                TetrisBoard -) Player: Dead sign
-                deactivate TetrisBoard
+        par [Move the tetromino by pressing key]
+            Player -) TetrisBoard : Press Key
+            TetrisBoard -) +TetrominoMover : Request moving tetromino
+            TetrominoMover -) TetrominoMover : move the tetromino
+        and [Drop the tetromino every 500ms]
+            loop Every 500ms
+                TetrisBoard ->> TetrominoMover: Request dropping tetromino
+                TetrominoMover -->> -TetrominoMover: Drop the tetromino
             end
         end
-    deactivate Player
+
+        alt Is all blink in a line is full
+            TetrisBoard ->> TetrisBoard: Clear the line in the board
+        end
+        
+        break When Tetromino touch top line
+            TetrisBoard -) -Player: Game Over
+        end
+        deactivate Player
+    end
+    
+    
         
 ```
