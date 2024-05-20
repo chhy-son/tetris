@@ -1,8 +1,6 @@
-interface ITetromino {
-  [key: string]: number[][];
-}
+type TetrominoType = { [key: string]: number[][] };
 
-const TETROMINOS: ITetromino = {
+const TETROMINOS: TetrominoType = {
   TetrominoI: [
     [1, 0, 0, 0],
     [1, 0, 0, 0],
@@ -22,5 +20,13 @@ export function getTetromino() {
     return typeValue[typeIndex];
   };
 
-  return TETROMINOS[getRandomTetrominoType()];
+  const getColor = () => {
+    return "brown";
+  };
+
+  return TETROMINOS[getRandomTetrominoType()].map((cell) => cell && getColor());
+}
+
+export function drawBoard() {
+  return [["white"]];
 }
