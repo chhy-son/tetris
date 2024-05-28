@@ -1,8 +1,10 @@
 import Cell from "./Cell.tsx";
 import "./Board.css";
 
+export type BoardType = string[][];
+
 interface IProps {
-  render: string[][];
+  render: BoardType;
   cellSize: number;
 }
 

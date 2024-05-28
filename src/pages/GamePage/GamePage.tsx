@@ -1,7 +1,6 @@
-import "./App.css";
-import Board from "./componets/board/Board.tsx";
+import Board from "../../componets/board/Board.tsx";
 
-function App() {
+function GamePage() {
   const render: string[][] = Array.from(Array(20), () =>
     Array(10).fill("black"),
   );
@@ -13,4 +12,4 @@ function App() {
   );
 }
 
-export default App;
+export default GamePage;

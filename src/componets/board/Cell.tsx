@@ -5,6 +5,8 @@ interface IProps {
   cellSize: number;
 }
 
+export type CellType = string;
+
 function Cell(props: IProps) {
   return (
     <div
