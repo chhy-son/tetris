@@ -1,13 +1,12 @@
 import Board from "../../componets/board/Board.tsx";
+import TetrisBoard from "../../classes/TetrisBoard.tsx";
 
 function GamePage() {
-  const render: string[][] = Array.from(Array(20), () =>
-    Array(10).fill("black"),
-  );
+  const tetrisBoard = new TetrisBoard();
 
   return (
     <div>
-      <Board render={render} cellSize={30} />
+      <Board render={tetrisBoard.board} cellSize={30} />
     </div>
   );
 }
