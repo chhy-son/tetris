@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { TetrominoType } from "../../classes/Tetromino";
 
 interface TetrominoState {
   position: { x: number; y: number };
@@ -7,25 +8,13 @@ interface TetrominoState {
 
 const initialState: TetrominoState = {
   position: { x: 0, y: 0 },
-  shape: TETROMINOS["TetrominoI"],
+  shape: [],
 };
 
 export const tetrominoSlice = createSlice({
   name: "tetromino",
   initialState,
   reducers: {
-    moveLeft: (state) => {
-      state.position.x -= 1;
-    },
-    moveRight: (state) => {
-      state.position.x += 1;
-    },
-    moveUp: (state) => {
-      state.position.y -= 1;
-    },
-    moveDown: (state) => {
-      state.position.y += 1;
-    },
     nowTetrominoIs: (state, action) => {
       state.shape = action.payload.tetromino;
     },
