@@ -5,15 +5,14 @@
 ```mermaid
     classDiagram
     class Tetris {
-        -nowTetromino Tetromino
-        +play()
+        +play() void
     }
 
     class TetrisBoard {
-        -Array~Array~bool~~ board
-        +init()
-        +clearRow(lineNumber) void
-        +tetris() void
+        -Array~Array~bool~~ board$
+        +clearBoard()
+        +clearALine(lineNumber) void
+        +getBoardWith(tetromino) void
     }
 
     class TetrominoCreator {
@@ -27,14 +26,14 @@
         +rightRotate(tetromino) bool
         +softDrop(tetromino) bool
         +hardDrop(tetromino, pos) bool
+        +rotateRight(tetromino) bool
+        +rotateLeft(tetromino) bool
     }
 
     class Tetromino {
         <<interface>>
-        -int number$
         -Array~Array~char~~ shape$
-        +int rowPosition
-        +int colPosition
+        -position$
         +getShape() -Array~Array~char~~
     }
     class TetrominoI
@@ -51,12 +50,13 @@
     Tetris --> TetrominoMover
     TetrominoCreator "1" --* "1..*" Tetromino
     TetrominoMover ..> Tetromino
-    Tetromino ..|> TetrominoI
-    Tetromino ..|> TetrominoO
-    Tetromino ..|> TetrominoZ
-    Tetromino ..|> TetrominoS
-    Tetromino ..|> TetrominoJ
-    Tetromino ..|> TetrominoL
-    Tetromino ..|> TetrominoT
+    TetrisBoard ..> Tetromino
+    Tetromino <|.. TetrominoI
+    Tetromino <|.. TetrominoO
+    Tetromino <|.. TetrominoZ
+    Tetromino <|.. TetrominoS
+    Tetromino <|.. TetrominoJ
+    Tetromino <|.. TetrominoL
+    Tetromino <|.. TetrominoT
 
 ```
